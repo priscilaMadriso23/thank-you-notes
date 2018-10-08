@@ -21,7 +21,7 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON('TutorialToken.json', function(data) {
+    $.getJSON('ThankYouNoteToken.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
       var TutorialTokenArtifact = data;
       App.contracts.TutorialToken = TruffleContract(TutorialTokenArtifact);

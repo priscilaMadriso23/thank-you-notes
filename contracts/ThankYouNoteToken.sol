@@ -7,7 +7,7 @@ contract ThankYouNoteToken is StandardToken{
   string public name = "Thank You Noes";
   string public symbol = "TYN";
   uint8 public decimals = 2;
-  uint public INITIAL_SUPPLY = 0;
+  uint public INITIAL_SUPPLY = 1;
   
   constructor() public {
   totalSupply_ = INITIAL_SUPPLY;
