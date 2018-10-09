@@ -1,11 +1,18 @@
+var HDWalletProvider = require("truffle-hdwallet-provider");
+var memonic = "banana adjust rich comfort virus clip taxi accident public erosion decorate start";
+
+
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // for more about customizing your Truffle configuration!
   networks: {
-    development: {
-      host: "127.0.0.1",
-      port: 8545,
-      network_id: "*" // Match any network id
-    }
+    kovan: {
+      provider: function(){
+        return new HDWalletProvider(memonic, "https://kovan.infura.io/v3/da64c573fb534764bbe18716fe6fe421")
+      },
+      network_id: 42,
+      gas:4500000,
+      gasPrice: 21
+    }  
   }
 };
