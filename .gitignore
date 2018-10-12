@@ -1,2 +1,4 @@
 
-node_modules/secp256k1/src/secp256k1-src/
+
+build
+node_modules
