@@ -1,16 +1,37 @@
 pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20Burnable.sol";
 
-contract ThankYouNoteToken is StandardToken{
+contract ThankYouNoteToken is ERC20Mintable, ERC20Burnable {
+    string private _name;
+    string private _symbol;
+    uint8 private _decimals;
 
-  string public name = "Thank You Notes";
-  string public symbol = "TYN";
-  uint8 public decimals = 2;
-  uint public INITIAL_SUPPLY = 150;
-  
-  constructor() public {
-  totalSupply_ = INITIAL_SUPPLY;
-  balances[msg.sender] = INITIAL_SUPPLY;
-  }
+    constructor(string name, string symbol, uint8 decimals) public {
+        _name = name;
+        _symbol = symbol;
+        _decimals = decimals;
+    }
+
+    /**
+    * @return the name of the token.
+    */
+    function name() public view returns(string) {
+        return _name;
+    }
+
+    /**
+    * @return the symbol of the token.
+    */
+    function symbol() public view returns(string) {
+        return _symbol;
+    }
+
+    /**
+    * @return the number of decimals of the token.
+    */
+    function decimals() public view returns(uint8) {
+        return _decimals;
+    }
 }

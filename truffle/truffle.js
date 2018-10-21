@@ -1,18 +1,30 @@
-var HDWalletProvider = require("truffle-hdwallet-provider");
-var memonic = "banana adjust rich comfort virus clip taxi accident public erosion decorate start";
+require('dotenv').config();
 
+const HDWalletProvider = require('truffle-hdwallet-provider');
+
+const providerWithMnemonic = (mnemonic, rpcEndpoint) => {
+  return new HDWalletProvider(mnemonic, rpcEndpoint);
+}
+
+const infuraProvider = (network) => {
+  return providerWithMnemonic(
+    process.env.MNEMONIC || '',
+    `https://${network}.infura.io/${process.env.INFURA_API_KEY}`,
+  );
+};
 
 module.exports = {
-  // See <http://truffleframework.com/docs/advanced/configuration>
-  // for more about customizing your Truffle configuration!
   networks: {
+    development: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '*',
+    },
     kovan: {
-      provider: function(){
-        return new HDWalletProvider(memonic, "https://kovan.infura.io/v3/da64c573fb534764bbe18716fe6fe421")
-      },
+      provider: infuraProvider('kovan'),
       network_id: 42,
-      gas:4500000,
-      gasPrice: 21
-    }  
-  }
+      gas: 4500000,
+      gasPrice: 21,
+    },
+  },
 };
