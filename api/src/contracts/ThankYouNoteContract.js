@@ -4,7 +4,7 @@ const _ = require('lodash');
 const BigNumber = require('bignumber.js');
 const { getWeb3Provider } = require('../utils/web3Provider');
 const { encrypt } = require('../utils/cipherUtils');
-const { addToIPFS, getFromIPFS } = require('../utils/ipfsUtils');
+const { addToIPFS } = require('../utils/ipfsUtils');
 const tynABI = require('../../abi/ThankYouNote');
 
 const provider = getWeb3Provider();
@@ -24,12 +24,12 @@ if (typeof tynContract.currentProvider.sendAsync !== 'function') {
   };
 }
 
-exports.thanks = async (fromUser, toUser, message) => {
+exports.thanks = async (domain, fromUser, toUser, message) => {
   const instance = await tynContract.deployed();
   const date = moment().unix();
   const encryptedMessage = encrypt(wallet._pubKey, message);
   const hash = await addToIPFS(encryptedMessage);
-  const tx = await instance.thanks(date, fromUser, toUser, hash, { from: coinbase });
+  const tx = await instance.thanks(date, domain, fromUser, toUser, hash, { from: coinbase });
   return tx;
 };
 

@@ -17,10 +17,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/thanks', thanks);
 app.use('/recognitions', recognitions);
 
-app.get('/', (req, res) => {
-  res.status(200).json({ success: true });
-});
-
 app.listen(port, () => {
   console.log(`Server listening on port ${port}!`);
 });

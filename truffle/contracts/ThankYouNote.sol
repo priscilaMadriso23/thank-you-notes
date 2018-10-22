@@ -9,12 +9,12 @@ contract ThankYouNote {
 
     mapping (string => Balance) private _balances;
     mapping (string => bool) private _registered;
-    string[] private _users;
 
     uint private _totalSupply;
 
     event Thanks (
         uint indexed date,
+        string domain,
         string from,
         string to,
         string messageHash,
@@ -23,6 +23,7 @@ contract ThankYouNote {
 
     event AddUser (
         uint indexed date,
+        string domain,
         string name
     );
 
@@ -47,14 +48,14 @@ contract ThankYouNote {
     * @param from The user that gives.
     * @param to The user that receives.
     */
-    function thanks(uint date, string from, string to, string messageHash) external {
+    function thanks(uint date, string domain, string from, string to, string messageHash) external {
         require(!_isEqual(from, to), "from == to");
-        _addUser(date, from);
-        _addUser(date, to);
+        _addUser(date, domain, from);
+        _addUser(date, domain, to);
         _balances[from].sent = _balances[from].sent + 1;
         _balances[to].received = _balances[to].received + 1;
         _totalSupply = _totalSupply + 1;
-        emit Thanks(date, from, to, messageHash, 1);
+        emit Thanks(date, domain, from, to, messageHash, 1);
     }
 
     function _isEqual(string a, string b) internal pure returns (bool) {
@@ -64,10 +65,10 @@ contract ThankYouNote {
     /**
     * @dev Creates a log if a new user is added
     */
-    function _addUser(uint date, string name) internal {
+    function _addUser(uint date,string domain, string name) internal {
         if(!_registered[name]) {
             _registered[name] = true;
-            emit AddUser(date, name);
+            emit AddUser(date, domain, name);
         }
     }
 }
