@@ -7,7 +7,7 @@ exports.thanks = async (req, res) => {
   try {
     const { username, message } = splitTextMessage(text);
     await thanks(user_name, username, message);
-    res.status(200).json({ text: `Thank you note sent to <@${username}> !` });
+    res.status(200).json({ text: `1 TYN sent to <@${username}> !` });
   } catch (error) {
     res.status(200).json({ text: error.message });
   }

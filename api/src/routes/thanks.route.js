@@ -1,5 +1,6 @@
 const express = require('express');
 const { thanks } = require('../controllers/thanks.controller');
+const { tokenValidator } = require('../middleware/slackTokenValidator.middleware');
 
 const router = express.Router();
 
@@ -11,6 +12,6 @@ const router = express.Router();
  *  text
  * }
  */
-router.post('/', thanks);
+router.post('/', tokenValidator, thanks);
 
 module.exports = router;

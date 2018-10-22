@@ -5,7 +5,7 @@ exports.recognitions = async (req, res) => {
   const { body } = req;
   const { user_name } = body;
   const status = await balanceOf(user_name);
-  const text = `Thanks Sent: ${status.sent}
-  Thanks Received: ${status.received}`;
+  const text = `TYN Sent: ${status.sent}
+  TYN Received: ${status.received}`;
   res.status(200).json({ text });
 };
