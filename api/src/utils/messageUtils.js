@@ -26,6 +26,10 @@ exports.getUser = (user_name) => {
   return _.first(_.filter(users, { user_name }));
 }
 
+/**
+ * Split the text into two strings
+ * https://api.slack.com/slash-commands
+ */
 exports.splitTextMessage = (text) => {
   const split = _.split(text, ' ');
   let username = _.get(split, '[0]');

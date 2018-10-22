@@ -1,17 +1,4 @@
-require('dotenv').config();
-
-const HDWalletProvider = require('truffle-hdwallet-provider');
-
-const providerWithMnemonic = (mnemonic, rpcEndpoint) => {
-  return new HDWalletProvider(mnemonic, rpcEndpoint);
-}
-
-const infuraProvider = (network) => {
-  return providerWithMnemonic(
-    process.env.MNEMONIC || '',
-    `https://${network}.infura.io/${process.env.INFURA_API_KEY}`,
-  );
-};
+const { infuraProvider } = require('./utils/web3Provider');
 
 module.exports = {
   networks: {

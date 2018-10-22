@@ -1,5 +1,5 @@
-const ThankYouNoteToken = artifacts.require('ThankYouNoteToken');
+const ThankYouNote = artifacts.require('ThankYouNote');
 
 module.exports = function (deployer) {
-  deployer.deploy(ThankYouNoteToken, 'Thank You Note', 'TYN', 0);
+  deployer.deploy(ThankYouNote);
 };

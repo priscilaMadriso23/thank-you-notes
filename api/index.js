@@ -1,8 +1,7 @@
-'use strict';
-
 const express = require('express');
 const bodyParser = require('body-parser');
-const _ = require('lodash');
+
+require('dotenv').config();
 
 const thanks = require('./src/routes/thanks.route');
 const recognitions = require('./src/routes/recognitions.route');
@@ -22,7 +21,7 @@ app.get('/', (req, res) => {
   res.status(200).json({ success: true });
 });
 
-app.listen(port, function () {
+app.listen(port, () => {
   console.log(`Server listening on port ${port}!`);
 });
 

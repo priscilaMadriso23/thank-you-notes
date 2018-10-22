@@ -1,19 +1,11 @@
 const _ = require('lodash');
-const { getUser } = require('../utils/messageUtils');
+const { balanceOf } = require('../contracts/ThankYouNoteContract');
 
-exports.recognitions = (req, res) => {
+exports.recognitions = async (req, res) => {
   const { body } = req;
   const { user_name } = body;
-  const user = getUser(user_name);
-  const status = {
-    thanksSent: user.thanksSent,
-    thanksReceived: _.size(user.thanks),
-    nominationsSent: user.nominationsSent,
-    nominationsReceived: _.size(user.nominations),
-  }
-  const text = `Thanks Sent: ${status.thanksSent}
-  Thanks Received: ${status.thanksReceived}
-  Nominations Sent: ${status.nominationsSent}
-  Nominations Received: ${status.nominationsReceived}`;
+  const status = await balanceOf(user_name);
+  const text = `Thanks Sent: ${status.sent}
+  Thanks Received: ${status.received}`;
   res.status(200).json({ text });
 };
