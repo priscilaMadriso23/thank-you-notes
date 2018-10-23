@@ -1,5 +1,16 @@
 const ThankYouNote = artifacts.require('ThankYouNote');
+const ThankYouNoteToken = artifacts.require('ThankYouNoteToken');
 
 module.exports = function (deployer) {
-  deployer.deploy(ThankYouNote);
+  // in production networks we should use the same token smart contract
+  deployer.deploy(ThankYouNoteToken, 'Thank You Note', 'TYN', 0)
+    .then(() => {
+      return deployer.deploy(ThankYouNote, ThankYouNoteToken.address);
+    })
+    .then(() => {
+      return ThankYouNoteToken.deployed();
+    })
+    .then((token) => {
+      token.addMinter(ThankYouNote.address);
+    })
 };
