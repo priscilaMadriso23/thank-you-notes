@@ -3,9 +3,9 @@ const ThankYouNoteToken = artifacts.require('ThankYouNoteToken');
 
 module.exports = function (deployer) {
   // in production networks we should use the same token smart contract
-  deployer.deploy(ThankYouNoteToken, 'Thank You Note', 'TYN', 0)
+  deployer.deploy(ThankYouNoteToken, 'Thank You Note', 'TYN', 2)
     .then(() => {
-      return deployer.deploy(ThankYouNote, ThankYouNoteToken.address);
+      return deployer.deploy(ThankYouNote, ThankYouNoteToken.address, 2);
     })
     .then(() => {
       return ThankYouNoteToken.deployed();
