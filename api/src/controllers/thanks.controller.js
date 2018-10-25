@@ -11,10 +11,10 @@ exports.thanks = (req, res) => {
       .then(() => {
         call({
           endpoint: team_domain,
-          body: { text: `<@${username}> just received 1 TYN !` },
+          body: { text: `<@${username}> just received 1 TYN :tyn: !` },
         });
       });
-    res.status(200).json({ text: `1 TYN sent to <@${username}> !` });
+    res.status(200).json({ text: `1 TYN :tyn: sent to <@${username}> !` });
   } catch (error) {
     res.status(200).json({ text: error.message });
   }

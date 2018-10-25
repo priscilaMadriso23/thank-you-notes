@@ -29,14 +29,21 @@ exports.thanks = async (domain, fromUser, toUser, message) => {
   const date = moment().unix();
   const encryptedMessage = encrypt(wallet._pubKey, message);
   const hash = await addToIPFS(encryptedMessage);
-  const tx = await instance.thanks(date, domain, fromUser, toUser, hash, { from: coinbase });
+  let decimals = await instance.decimals();
+  decimals = decimals.toNumber();
+  const qty = (1 * (10 ** decimals));
+  const tx = await instance.thanks(date, domain, fromUser, toUser, hash, qty, { from: coinbase });
   return tx;
 };
 
 exports.balanceOf = async (user) => {
   const instance = await tynContract.deployed();
   const balance = await instance.balanceOf(user);
-  const sent = _.get(balance, '[0]', new BigNumber(0)).toNumber();
-  const received = _.get(balance, '[1]', new BigNumber(0)).toNumber();
+  let decimals = await instance.decimals();
+  decimals = decimals.toNumber();
+  let sent = _.get(balance, '[0]', new BigNumber(0)).toNumber();
+  let received = _.get(balance, '[1]', new BigNumber(0)).toNumber();
+  sent = _.round((sent / (10 ** decimals)), decimals);
+  received = _.round((received / (10 ** decimals)), decimals);
   return { sent, received };
 };

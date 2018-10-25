@@ -16,5 +16,5 @@ exports.getWeb3Provider = () => {
   if (process.env.PROVIDER === 'infura') {
     return infuraProvider();
   }
-  return new Web3.providers.HttpProvider('http://localhost:8545')
+  return new Web3.providers.HttpProvider('http://localhost:8545');
 };

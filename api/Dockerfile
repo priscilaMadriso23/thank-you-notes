@@ -7,7 +7,6 @@ COPY ./abi ./abi
 COPY ./src ./src
 COPY ./index.js ./index.js
 COPY ./package*.json ./
-#COPY ./.env ./.env
 RUN npm install
 
 EXPOSE 8080

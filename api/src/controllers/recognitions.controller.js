@@ -5,8 +5,18 @@ exports.recognitions = async (req, res) => {
   const { body } = req;
   const { user_name } = body;
   const status = await balanceOf(user_name);
-  const text = `Thank You Notes
-  TYN Sent: ${status.sent}
-  TYN Received: ${status.received}`;
-  res.status(200).json({ text });
+  const fields = [
+    {
+      title: 'TYN Sent',
+      value: status.sent,
+      short: true,
+    },
+    {
+      title: 'TYN Received',
+      value: status.received,
+      short: true,
+    },
+  ];
+  const attachments = [{ fields }];
+  res.status(200).json({ attachments });
 };
