@@ -7,14 +7,12 @@
       "label": "Nominee",
       "type": "text",
       "name": "nominee",
-      "value": "text",
       "hint": "email address"
     },
     {
       "label": "Project",
       "type": "text",
       "name": "project",
-      "value": "text"
     },
     {
       "label": "Category",
