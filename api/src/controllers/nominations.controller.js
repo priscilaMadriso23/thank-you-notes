@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const qs = require('querystring');
 const { getUserFromTextMessage } = require('../utils/messageUtils');
 const nominateForm = require('../forms/nominate.form.json');
 
