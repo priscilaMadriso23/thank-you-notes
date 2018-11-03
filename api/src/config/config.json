@@ -4,5 +4,6 @@
   },
   "eybthdigital": {
     "url": "https://hooks.slack.com/services/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"
-  }
+  },
+  "slack": "https://slack.com/api"
 }

@@ -1,0 +1,76 @@
+{
+  "title": "Nominate",
+  "callback_id": "submit-nominate",
+  "submit_label": "Nominate",
+  "elements": [
+    {
+      "label": "Nominee",
+      "type": "text",
+      "name": "nominee",
+      "value": "text",
+      "hint": "email address"
+    },
+    {
+      "label": "Project",
+      "type": "text",
+      "name": "project",
+      "value": "text"
+    },
+    {
+      "label": "Category",
+      "name": "category",
+      "type": "select",
+      "option_groups": [
+        {
+          "label": "Exceptional Client Service",
+          "options": [
+            {
+              "label": "EY Connected",
+              "value": "100"
+            },
+            {
+              "label": "Digital Champion",
+              "value": "101"
+            }
+          ]
+        },
+        {
+          "label": "Team Leadership",
+          "options": [
+            {
+              "label": "EY High Performing Team",
+              "value": "200"
+            },
+            {
+              "label": "EY Nominator",
+              "value": "201"
+            },
+            {
+              "label": "Technical Trainer",
+              "value": "202"
+            }
+          ]
+        },
+        {
+          "label": "Business and People Leadership",
+          "options": [
+            {
+              "label": "EY MVP",
+              "value": "300"
+            },
+            {
+              "label": "Best Manager",
+              "value": "301"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Description",
+      "type": "textarea",
+      "name": "description",
+      "hint": "description"
+    }
+  ]
+}
