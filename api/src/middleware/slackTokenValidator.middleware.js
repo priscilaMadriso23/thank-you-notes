@@ -14,3 +14,14 @@ exports.tokenValidator = (req, res, next) => {
     res.status(401).jsonp({ success: false, message: 'Unauthorized' });
   }
 };
+
+exports.formTokenValidator = (req, res, next) => {
+  const { body } = req;
+  const { payload } = body;
+  const { token } = JSON.parse(payload);
+  if (token && isValidToken(token)) {
+    next();
+  } else {
+    res.status(401).jsonp({ success: false, message: 'Unauthorized' });
+  }
+};

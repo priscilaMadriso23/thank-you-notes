@@ -30,9 +30,8 @@ exports.nominate = async (req, res) => {
 };
 
 exports.submit = (req, res) => {
-  const body = JSON.parse(req.body.payload);
-  console.log('form submit', body);
-  // immediately respond with a empty 200 response to let
-  // Slack know the command was received
+  const { payload } = req.body;
+  const { submission } = JSON.parse(payload);
+  console.log('form submit', submission);
   res.send('');
 };
