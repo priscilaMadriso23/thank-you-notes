@@ -1,11 +1,11 @@
 {
   "eybthateam": {
-    "url": "https://hooks.slack.com/services/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",
+    "url": "",
     "botToken": ""
   },
   "eybthdigital": {
-    "url": "https://hooks.slack.com/services/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",
-    "botToken": "xoxb-140370562208-470566960992-gWbCBvvMGx1qwSlflysvYACH"
+    "url": "",
+    "botToken": ""
   },
   "slack": {
     "url": "https://slack.com"
