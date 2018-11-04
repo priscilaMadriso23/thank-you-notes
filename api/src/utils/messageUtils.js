@@ -15,7 +15,7 @@ exports.splitTextMessage = (text) => {
     throw new Error('Please include a short message');
   }
   username = _.replace(username, '@', '');
-  return { username, message };
+  return { username, message: text };
 };
 
 /**
