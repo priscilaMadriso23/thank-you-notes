@@ -23,7 +23,7 @@ exports.splitTextMessage = (text) => {
  * https://api.slack.com/slash-commands
  */
 exports.getUserFromTextMessage = (text) => {
-  const username = _.trim(text);
+  let username = _.trim(text);
   if (_.isEmpty(username) || !_.startsWith(username, '@')) {
     throw new Error('Please specify a user');
   }

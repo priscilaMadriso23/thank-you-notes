@@ -2,8 +2,8 @@ const _ = require('lodash');
 
 const isValidToken = (token) => {
   const list = _.split(process.env.TOKEN, ',');
-  return _.includes(list,token);
-}
+  return _.includes(list, token);
+};
 
 exports.tokenValidator = (req, res, next) => {
   const { body } = req;

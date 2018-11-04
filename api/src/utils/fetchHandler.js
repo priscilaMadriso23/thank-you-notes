@@ -13,8 +13,6 @@ const getFetchOptions = (method = 'GET', props) => {
   const options = {
     method,
     headers: customHeaders,
-    credentials: 'include',
-    'Access-Control-Allow-Credentials': true,
   };
   options.body = JSON.stringify(body);
   return options;
