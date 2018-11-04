@@ -12,7 +12,7 @@
     {
       "label": "Project",
       "type": "text",
-      "name": "project",
+      "name": "project"
     },
     {
       "label": "Category",
