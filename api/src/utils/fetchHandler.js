@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const _ = require('lodash');
 
-const config = require('../config/slackWebhooks.json');
+const config = require('../config/config.json');
 
 // Set up the header for every call to the API
 const getFetchOptions = (method = 'GET', props) => {
@@ -13,8 +13,6 @@ const getFetchOptions = (method = 'GET', props) => {
   const options = {
     method,
     headers: customHeaders,
-    credentials: 'include',
-    'Access-Control-Allow-Credentials': true,
   };
   options.body = JSON.stringify(body);
   return options;
@@ -79,10 +77,10 @@ exports.call = ({ ...props }) => {
   }
   const options = getFetchOptions(method, props);
   addToLoadingQueue(options);
-  // const url = createDynamicURL(apiUrl, props.url, props.params);
+  const url = createDynamicURL(apiUrl, props.url, props.params);
   // console.log('--request-->', url.toString(), JSON.stringify(options));
   /* global fetch */
-  return fetch(apiUrl, options)
+  return fetch(url, options)
     .then(response => handleResponse(props, response))
     .then(response => handleStopTransaction(props, response))
     .catch(error => handleErrorTransaction(props, error));
