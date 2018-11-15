@@ -3,6 +3,7 @@ const { getUserFromTextMessage } = require('../utils/messageUtils');
 const { getBotToken } = require('../utils/tokenUtils');
 const nominateForm = require('../forms/nominate.form.json');
 const { call } = require('../utils/fetchHandler');
+const { sendMail }= require('../utils/mailUtils');
 
 exports.nominate = async (req, res) => {
   const { body } = req;
@@ -33,5 +34,6 @@ exports.submit = (req, res) => {
   const { payload } = req.body;
   const { submission } = JSON.parse(payload);
   console.log('form submit', submission);
+  sendMail(submission.category,submission.project,submission.description,submission.nominee,'Test');
   res.send('');
 };
