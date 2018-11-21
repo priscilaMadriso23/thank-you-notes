@@ -3,7 +3,7 @@ const { getUserFromTextMessage } = require('../utils/messageUtils');
 const { getBotToken } = require('../utils/tokenUtils');
 const nominateForm = require('../forms/nominate.form.json');
 const { call } = require('../utils/fetchHandler');
-const { sendMail }= require('../utils/mailUtils');
+const { sendMail } = require('../utils/mailUtils');
 
 exports.nominate = async (req, res) => {
   const { body } = req;
@@ -19,10 +19,9 @@ exports.nominate = async (req, res) => {
     body: {
       trigger_id,
       dialog: JSON.stringify(nominateForm),
-    }
+    },
   })
     .then((result) => {
-      console.log('dialog.open', result);
       res.send('');
     }).catch((err) => {
       console.log('dialog.open call failed', err);
@@ -31,7 +30,8 @@ exports.nominate = async (req, res) => {
 };
 
 exports.submit = (req, res) => {
-  const { submission } = req.body;
-  sendMail(submission.category,submission.project,submission.situation,submission.impact,submission.behavior,submission.nominee,'Test');
+  const { payload } = req.body;
+  const { submission, user } = JSON.parse(payload);
+  sendMail(submission, user);
   res.send('');
 };
