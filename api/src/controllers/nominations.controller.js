@@ -10,7 +10,7 @@ exports.nominate = async (req, res) => {
   const { user_name, team_domain, text, trigger_id } = body;
   try {
     const nominee = getUserFromTextMessage(text);
-    console.log('nominee', nominee);
+    nominateForm.state = nominee;
     const botToken = getBotToken(team_domain);
     call({
       endpoint: 'slack',
@@ -21,7 +21,6 @@ exports.nominate = async (req, res) => {
       body: {
         trigger_id,
         dialog: JSON.stringify(nominateForm),
-        state: nominee,
       },
     })
       .then((result) => {
@@ -40,5 +39,5 @@ exports.submit = (req, res) => {
   console.log(req.body);
   const { submission, user } = JSON.parse(payload);
   sendMail(submission, user);
-  res.send('');
+  res.status(200).json({ text: 'Nomination sent, thanks!' });
 };
