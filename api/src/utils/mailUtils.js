@@ -10,7 +10,7 @@ exports.sendMail = (form, user) => {
   const body = pug.renderFile(`${__dirname}/emailTemplate/nominationEmail.pug`, message);
   const msg = {
     to: process.env.TO_RECIPIENT,
-    cc: form.nominee,
+    // cc: form.nominee,
     from: 'no-reply@eyrecognitions.com',
     subject: 'You have been nominated',
     html: body,
