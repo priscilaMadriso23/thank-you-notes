@@ -1,12 +1,14 @@
 const sgMail = require('@sendgrid/mail');
 const pug = require('pug');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-exports.sendMail=(category,project,description,nominee,nominatedBy) =>{
+exports.sendMail=(category,project,situation,impact,behavior,nominee,nominatedBy) =>{
     const body = pug.renderFile(`${__dirname}/emailTemplate/nominationEmail.pug`,
     {
         category,
         project,
-        description,
+        situation,
+        impact,
+        behavior,
         nominee,
         nominatedBy
     }
@@ -14,7 +16,7 @@ exports.sendMail=(category,project,description,nominee,nominatedBy) =>{
     console.log(body);
     const msg = {
         to:nominee,
-        from:'no-reply@recognitions.com',
+        from:'no-reply@eyrecognitions.com',
         subject:'You have been nominated',
         html:body
     }

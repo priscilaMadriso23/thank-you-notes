@@ -4,29 +4,53 @@ html
     
         style.
          .box{
-               border:2px #ffe600 solid;
-               font-family: Helvetica, Arial, Sans-Serif;
-               font-size:20px;
+             border:2px #ffe600 solid;
+             font-family: Helvetica, Arial, Sans-Serif;
+             font-size:20px;
            }
            .row{
-               margin-top:10px;
+             margin-top:10px;
            }
+            strong{
+              font-family: Broadway;
+              color:black;
+            }
+            .yellowText{
+              font-family: Century Gothic;
+              font-weight:bold;
+              color:#fad32e;
+            }
+            .lightblue{
+              color:#21bcf4;
+            }
+            .subtitle{
+              font-weight: bold;
+            }
     body
-
-        div
-            img.className#IdName(src='./2.png' alt="EY")
 
         .box
 
             .row
-                strong Category: #{category}
+                .yellowText 
+                  strong Category: 
+                  |#{category}
             .row
-                strong Project: #{project}
+                .yellowText
+                  strong Project: 
+                  |#{project}
             .row
                 p
-                    strong Description: #{description} 
+                    strong Description:
+                    .subtitle Impact
+                    |#{impact}
+                    .subtitle Situation
+                    |#{situation}
+                    .subtitle Behavior
+                    |#{behavior}
             .row
-                strong Nominee: #{nominee}
+                .lightblue
+                  strong Nominee: 
+                  |#{nominee}
             .row
                 p Nominated By: #{nominatedBy}
 

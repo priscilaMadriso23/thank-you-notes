@@ -31,9 +31,7 @@ exports.nominate = async (req, res) => {
 };
 
 exports.submit = (req, res) => {
-  const { payload } = req.body;
-  const { submission } = JSON.parse(payload);
-  console.log('form submit', submission);
-  sendMail(submission.category,submission.project,submission.description,submission.nominee,'Test');
+  const { submission } = req.body;
+  sendMail(submission.category,submission.project,submission.situation,submission.impact,submission.behavior,submission.nominee,'Test');
   res.send('');
 };

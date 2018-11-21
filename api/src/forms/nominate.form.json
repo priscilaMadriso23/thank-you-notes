@@ -40,10 +40,6 @@
               "value": "200"
             },
             {
-              "label": "EY Nominator",
-              "value": "201"
-            },
-            {
               "label": "Technical Trainer",
               "value": "202"
             }
@@ -65,10 +61,22 @@
       ]
     },
     {
-      "label": "Description",
+      "label": "Situation",
+      "type": "text",
+      "name": "situation",
+      "hint": "situation"
+    },
+    {
+      "label": "Impact",
+      "type": "text",
+      "name": "impact",
+      "hint": "impact"
+    },
+    {
+      "label": "Behavior",
       "type": "textarea",
-      "name": "description",
-      "hint": "description"
+      "name": "behavior",
+      "hint": "behavior"
     }
   ]
 }
