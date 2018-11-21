@@ -4,12 +4,6 @@
   "submit_label": "Nominate",
   "elements": [
     {
-      "label": "Nominee",
-      "type": "text",
-      "name": "nominee",
-      "hint": "email address"
-    },
-    {
       "label": "Project",
       "type": "text",
       "name": "project"
