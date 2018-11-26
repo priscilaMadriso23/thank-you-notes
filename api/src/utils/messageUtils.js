@@ -1,5 +1,7 @@
 const _ = require('lodash');
-
+const { call } = require('./fetchHandler');
+const { getBotToken } = require('../utils/tokenUtils');
+const config = require('../config/config.json');
 /**
  * Split the text into two strings
  * https://api.slack.com/slash-commands
@@ -29,4 +31,20 @@ exports.getUserFromTextMessage = (text) => {
   }
   username = _.replace(username, '@', '');
   return username;
+};
+
+exports.getEmailByReference = async (reference,team_domain) => {
+  return getUserList(team_domain)
+  .then(response => {
+    return _.filter(response.members,(user)=> {
+      return user.id === reference || user.name === reference 
+    }
+  )})
+}
+
+getUserList = (team_domain) => {
+  return call({
+    endpoint: 'slack',
+    url:`api/users.list?token=${config[team_domain].botToken}`,
+  });
 };

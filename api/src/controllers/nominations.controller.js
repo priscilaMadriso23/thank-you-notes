@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { getUserFromTextMessage } = require('../utils/messageUtils');
+const { getUserFromTextMessage, getEmailByReference } = require('../utils/messageUtils');
 const { getBotToken } = require('../utils/tokenUtils');
 const nominateForm = require('../forms/nominate.form.json');
 const { call } = require('../utils/fetchHandler');
@@ -34,10 +34,12 @@ exports.nominate = async (req, res) => {
   }
 };
 
-exports.submit = (req, res) => {
+exports.submit = async (req, res) => {
   const { payload } = req.body;
-  console.log(req.body);
-  const { submission, user } = JSON.parse(payload);
+  const { submission, user, state, team } = JSON.parse(payload);
+  const { domain } = team;
+  user = await getEmailByReference(user.id, domain);
+  submission.nominee = await getEmailByReference(state, domain);
   sendMail(submission, user);
   res.status(200).json({ text: 'Nomination sent, thanks!' });
 };
