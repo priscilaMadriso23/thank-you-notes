@@ -1,5 +1,5 @@
 const { splitTextMessage } = require('../utils/messageUtils');
-const { thanks } = require('../contracts/ThankYouNoteContract');
+const { thanks, getThanksHistory } = require('../contracts/ThankYouNoteContract');
 const { call } = require('../utils/fetchHandler');
 const config = require('../config/config.json');
 
@@ -18,6 +18,17 @@ exports.thanks = (req, res) => {
         });
       });
     res.status(200).json({ text: `1 TYN :tyn: sent to <@${username}> !` });
+  } catch (error) {
+    res.status(200).json({ text: error.message });
+  }
+};
+
+exports.getThanksHistory = (req, res) => {
+  try {
+    getThanksHistory()
+      .then((list) => {
+        res.status(200).json(list);
+      });
   } catch (error) {
     res.status(200).json({ text: error.message });
   }

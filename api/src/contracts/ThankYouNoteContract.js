@@ -3,8 +3,8 @@ const moment = require('moment');
 const _ = require('lodash');
 const BigNumber = require('bignumber.js');
 const { getWeb3Provider } = require('../utils/web3Provider');
-const { encrypt } = require('../utils/cipherUtils');
-const { addToIPFS } = require('../utils/ipfsUtils');
+const { encrypt, decrypt } = require('../utils/cipherUtils');
+const { addToIPFS, getFromIPFS } = require('../utils/ipfsUtils');
 const tynABI = require('../../abi/ThankYouNote');
 
 const provider = getWeb3Provider();
@@ -46,4 +46,36 @@ exports.balanceOf = async (user) => {
   sent = _.round((sent / (10 ** decimals)), decimals);
   received = _.round((received / (10 ** decimals)), decimals);
   return { sent, received };
+};
+
+exports.getThanksHistory = async () => {
+  const instance = await tynContract.deployed();
+  let decimals = await instance.decimals();
+  decimals = decimals.toNumber();
+  return new Promise((resolve, reject) => {
+    instance.Thanks({}, { fromBlock: 0 }).get((error, event) => {
+      if (!error) {
+        const thanksEvents = _.map(event, async (e) => {
+          const args = _.get(e, 'args', {});
+          const messageHash = _.get(args, 'messageHash', '');
+          const from = _.get(args, 'from', '');
+          const to = _.get(args, 'to', '');
+          const domain = _.get(args, 'domain', '');
+          const tempDate = _.get(args, 'date', '');
+          const tempQty = _.get(args, 'qty', new BigNumber(0)).toNumber();
+          const qty = _.round((tempQty / (10 ** decimals)), decimals);
+          const date = moment.unix(tempDate).utc();
+          // const encryptedMessage = await getFromIPFS(messageHash);
+          // let message;
+          // if (encryptedMessage) {
+          //   message = decrypt(wallet._privKey, encryptedMessage.toString());
+          // }
+          return { from, to, messageHash, domain, date, qty };
+        });
+        resolve(Promise.all(thanksEvents));
+      } else {
+        reject(error);
+      }
+    });
+  });
 };

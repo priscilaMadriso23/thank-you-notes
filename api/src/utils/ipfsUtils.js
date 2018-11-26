@@ -10,6 +10,11 @@ exports.addToIPFS = async (data) => {
 };
 
 exports.getFromIPFS = async (cid) => {
-  const results = await ipfs.files.get(cid);
-  return _.get(results, '[0].content', '');
+  try {
+    const results = await ipfs.files.get(cid);
+    return _.get(results, '[0].content', '');
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };
