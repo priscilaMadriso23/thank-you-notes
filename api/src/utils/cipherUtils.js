@@ -9,9 +9,13 @@ exports.encrypt = (publicKey, data) => {
 };
 
 exports.decrypt = (privateKey, encryptedData) => {
-  const bufferEncryptedData = Buffer.from(encryptedData, 'base64');
+  try {
+    const bufferEncryptedData = Buffer.from(encryptedData, 'base64');
 
-  const decryptedData = ecies.decrypt(privateKey, bufferEncryptedData);
+    const decryptedData = ecies.decrypt(privateKey, bufferEncryptedData);
 
-  return decryptedData.toString('utf8');
+    return decryptedData.toString('utf8');
+  } catch (error) {
+    return undefined;
+  }
 };

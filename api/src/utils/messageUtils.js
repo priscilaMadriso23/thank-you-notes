@@ -33,18 +33,18 @@ exports.getUserFromTextMessage = (text) => {
   return username;
 };
 
-exports.getEmailByReference = async (reference,team_domain) => {
-  return getUserList(team_domain)
-  .then(response => {
-    return _.filter(response.members,(user)=> {
-      return user.id === reference || user.name === reference 
-    }
-  )})
-}
-
-getUserList = (team_domain) => {
+const getUserList = (team_domain) => {
   return call({
     endpoint: 'slack',
-    url:`api/users.list?token=${config[team_domain].botToken}`,
+    url: `api/users.list?token=${config[team_domain].oauthToken}`,
   });
+};
+
+exports.getEmailByReference = async (reference, team_domain) => {
+  return getUserList(team_domain)
+    .then((response) => {
+      return _.filter(response.members, (user) => {
+        return user.id === reference || user.name === reference;
+      });
+    });
 };

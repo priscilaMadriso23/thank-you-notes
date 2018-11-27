@@ -10,7 +10,7 @@ exports.nominate = async (req, res) => {
   const { user_name, team_domain, text, trigger_id } = body;
   try {
     const nominee = getUserFromTextMessage(text);
-    console.log('nominee', nominee);
+    nominateForm.state = nominee;
     const botToken = getBotToken(team_domain);
     call({
       endpoint: 'slack',
@@ -21,7 +21,6 @@ exports.nominate = async (req, res) => {
       body: {
         trigger_id,
         dialog: JSON.stringify(nominateForm),
-        state: nominee,
       },
     })
       .then((result) => {
@@ -42,5 +41,5 @@ exports.submit = async (req, res) => {
   user = await getEmailByReference(user.id, domain);
   submission.nominee = await getEmailByReference(state, domain);
   sendMail(submission, user);
-  res.send('');
+  res.status(200).json({ text: 'Nomination sent, thanks!' });
 };

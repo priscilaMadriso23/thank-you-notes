@@ -6,8 +6,8 @@ const isValidToken = (token) => {
 };
 
 exports.tokenValidator = (req, res, next) => {
-  const { body } = req;
-  const { token } = body;
+  const { body, headers, query } = req;
+  const token = _.get(body, 'token', _.get(headers, 'token', _.get(query, 'token')));
   if (token && isValidToken(token)) {
     next();
   } else {
