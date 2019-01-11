@@ -14,7 +14,7 @@ exports.thanks = (req, res) => {
         call({
           endpoint: 'slackHooks',
           url: hook,
-          body: { text: `<@${username}> just received 1 TYN :tyn: from <@${user_name}> !` },
+          body: { text: `<@${username}> just received 1 TYN :tyn: from <@${user_name}> ! >${message}` },
         });
       });
     res.status(200).json({ text: `1 TYN :tyn: sent to <@${username}> !` });
