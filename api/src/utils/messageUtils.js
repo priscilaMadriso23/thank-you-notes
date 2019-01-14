@@ -9,7 +9,7 @@ const config = require('../config/config.json');
 exports.splitTextMessage = (text) => {
   const split = _.split(text, ' ');
   let username = _.get(split, '[0]', '');
-  const message = _.get(split, '[1]');
+  let message = _.get(split, '[1]');
   if (_.isEmpty(username) || !_.startsWith(username, '@')) {
     throw new Error('Please specify a user');
   }
@@ -17,7 +17,8 @@ exports.splitTextMessage = (text) => {
     throw new Error('Please include a short message');
   }
   username = _.replace(username, '@', '');
-  return { username, message: text };
+  message = _.join(_.slice(split, 1), ' ');
+  return { username, message };
 };
 
 /**
