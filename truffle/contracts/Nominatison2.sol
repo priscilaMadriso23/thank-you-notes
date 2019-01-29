@@ -9,32 +9,21 @@ contract RecognitionsVoting{
         string quarter; //1-2019(quarter-year)
     }
     
-    
     //Mappings to handle votes
-    //category -> nominee -> votes
-    mapping(string => mapping( string => uint )) votesCategoryPerNominee;
-    //category -> highestNominee
-    mapping(string => string) highestNomineePerCategory;
+    //category -> quarter -> nominee -> votes
+    mapping(string => mapping( string => mapping( string => uint ))) votesCategoryPerNominee;
+    //category -> quarter -> highestNominee
+    mapping(string => mapping(string => string)) highestNomineePerCategory;
     
     //Mappings for validations
-    //category -> nominatedBy -> true/false(if someone was already voted)
-    mapping(string => mapping( string => bool )) votedCategory;
+    //category -> quarter -> nominatedBy -> true/false(if someone was already voted)
+    mapping(string => mapping( string => mapping( string => bool) )) votedCategory;
     //category -> nominee -> quarter -> true/false (if someone was already nominated) 
     mapping(string => mapping( string => mapping( string => bool) )) nominedCategory;
     
     
-    event savedNominee(
-            string nominatedBy, 
-            string nominee, 
-            string category, 
-            string quarter
-    );
-    event savedVote(
-            string nominatedBy, 
-            string nominee, 
-            string category, 
-            uint highestVote
-    );
+    event savedNominee(string nominatedBy, string nominee, string category, string quarter);
+    event savedVote(string nominatedBy, string nominee, string category, uint highestVote);
     
     //Check if the nominee was nominated
     modifier nomineeExists(string _category, string _to, string _quarter){
@@ -46,10 +35,10 @@ contract RecognitionsVoting{
     }
     
     //Check if the voter already voted for the nominee
-    modifier checkVoteOnce(string _category, string _nominatedBy){
+    modifier checkVoteOnce(string _category, string _quarter, string _nominatedBy){
         require(
-             votedCategory[_category][_nominatedBy] == false,
-             'You already voted on this category.'
+             votedCategory[_category][_quarter][_nominatedBy] == false,
+             'You can vote just once.'
         );
         _;
     }
@@ -58,7 +47,7 @@ contract RecognitionsVoting{
     modifier nomineeJustOnce(string _category, string _nominee, string _quarter){
         require(
             nominedCategory[_category][_nominee][_quarter] == false,
-            'The nomimee was already nominated person.'
+            'You can nominee a person per category just one time.'
         );
         _;
     }
@@ -76,23 +65,32 @@ contract RecognitionsVoting{
         emit savedNominee(_nominatedBy, _nominee, _category, _quarter); 
     }
     
-    function votePerCategory(string _nominatedBy, string _nominee, string _category, string _quarter) public nomineeExists(_category, _nominee, _quarter) checkVoteOnce(_category,_nominatedBy)  {
-        uint votes = votesCategoryPerNominee[_category][_nominee] + 1;
-        uint highestVote = votesCategoryPerNominee[_category][highestNomineePerCategory[_category]]; 
+    function votePerCategory(string _nominatedBy, string _nominee, string _category, string _quarter) public nomineeExists(_category, _nominee, _quarter) checkVoteOnce(_category, _quarter, _nominatedBy)  {
+        uint votes = votesCategoryPerNominee[_category][_quarter][_nominee] + 1;
+        uint highestVote = votesCategoryPerNominee[_category][_quarter][highestNomineePerCategory[_category][_quarter]]; 
     
-        votesCategoryPerNominee[_category][_nominee] = votes;
+        votesCategoryPerNominee[_category][_quarter][_nominee] = votes;
         if( votes > highestVote){
-            highestNomineePerCategory[_category] = _nominee ;
+            highestNomineePerCategory[_category][_quarter] = _nominee ;
         }
         
-        votedCategory[_category][_nominatedBy] = true;
+        votedCategory[_category][_quarter][_nominatedBy] = true;
         emit savedVote(_nominatedBy, _nominee, _category, highestVote); 
     }
     
-    function getHighestNomineePerCategory( string _category) public view returns(string){
-        return highestNomineePerCategory[_category];
+    function getWinner( string _category, string _quarter) public view returns(string, uint){
+        return (
+            highestNomineePerCategory[_category][_quarter],
+            votesCategoryPerNominee[_category][_quarter][highestNomineePerCategory[_category][_quarter]]
+        );
+        
     }
-     function getVotesNomineePerCategory( string _category, string _nominee) public view returns(uint){
-        return votesCategoryPerNominee[_category][_nominee];
+    
+    function getNomineeInformation( string _category, string _nominee, string _quarter) public view returns(string,string,uint){
+        return (
+            _nominee,
+            _quarter,
+            votesCategoryPerNominee[_category][_quarter][_nominee]
+        );
     }
 }
