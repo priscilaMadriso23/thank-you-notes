@@ -1,0 +1,13 @@
+{
+  "eybthateam": {
+    "url": "",
+    "botToken": ""
+  },
+  "eybthdigital": {
+    "url": "",
+    "botToken": ""
+  },
+  "slack": {
+    "url": "https://slack.com"
+  }
+}

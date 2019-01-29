@@ -1,0 +1,57 @@
+doctype html
+html
+    head
+
+        style.
+         .box{
+             border:2px #ffe600 solid;
+             font-family: Helvetica, Arial, Sans-Serif;
+             font-size:20px;
+           }
+           .row{
+             margin-top:10px;
+           }
+            strong{
+              font-family: Broadway;
+              color:black;
+            }
+            .yellowText{
+              font-family: Century Gothic;
+              font-weight:bold;
+              color:#fad32e;
+            }
+            .lightblue{
+              color:#21bcf4;
+            }
+            .subtitle{
+              font-weight: bold;
+            }
+    body
+
+        .box
+
+            .row
+                .yellowText
+                  strong Category:
+                  |#{category}
+            .row
+                .yellowText
+                  strong Project:
+                  |#{project}
+            .row
+                p
+                    strong Description:
+                    .subtitle Impact
+                    |#{impact}
+                    .subtitle Situation
+                    |#{situation}
+                    .subtitle Behavior
+                    |#{behavior}
+            .row
+                .lightblue
+                  strong Nominee:
+                  |#{nominee}
+            .row
+                p Nominated By: #{user.name}
+
+
