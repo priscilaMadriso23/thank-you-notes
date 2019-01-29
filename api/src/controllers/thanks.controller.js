@@ -11,10 +11,11 @@ exports.thanks = (req, res) => {
     const { hook } = config[team_domain];
     thanks(team_domain, user_name, username, message)
       .then(() => {
+        const attachments = [{ title: 'Thank You Note', text: message }];
         call({
           endpoint: 'slackHooks',
           url: hook,
-          body: { text: `<@${username}> just received 1 TYN :tyn: from <@${user_name}> !` },
+          body: { text: `<@${username}> just received 1 TYN :tyn: from <@${user_name}> !`, attachments },
         });
       });
     res.status(200).json({ text: `1 TYN :tyn: sent to <@${username}> !` });

@@ -53,9 +53,11 @@ exports.getThanksHistory = async () => {
   let decimals = await instance.decimals();
   decimals = decimals.toNumber();
   return new Promise((resolve, reject) => {
-    instance.Thanks({}, { fromBlock: 0 }).get((error, event) => {
+    instance.Thanks({}, { fromBlock: 0 }).get(async (error, event) => {
       if (!error) {
-        const thanksEvents = _.map(event, async (e) => {
+        const thanksEvents = [];
+        for (let i = 0; i < event.length; i++) {
+          const e = event[i];
           const args = _.get(e, 'args', {});
           const messageHash = _.get(args, 'messageHash', '');
           const from = _.get(args, 'from', '');
@@ -65,13 +67,14 @@ exports.getThanksHistory = async () => {
           const tempQty = _.get(args, 'qty', new BigNumber(0)).toNumber();
           const qty = _.round((tempQty / (10 ** decimals)), decimals);
           const date = moment.unix(tempDate).utc();
-          // const encryptedMessage = await getFromIPFS(messageHash);
-          // let message;
-          // if (encryptedMessage) {
-          //   message = decrypt(wallet._privKey, encryptedMessage.toString());
-          // }
-          return { from, to, messageHash, domain, date, qty };
-        });
+          const encryptedMessage = await getFromIPFS(messageHash);
+          let message;
+          if (encryptedMessage) {
+            message = decrypt(wallet._privKey, encryptedMessage.toString());
+          }
+          //return { from, to, messageHash, domain, date, qty };
+          thanksEvents.push({ from, to, messageHash, domain, date, qty, message });
+        };
         resolve(Promise.all(thanksEvents));
       } else {
         reject(error);

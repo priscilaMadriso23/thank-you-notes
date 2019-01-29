@@ -41,5 +41,5 @@ exports.submit = async (req, res) => {
   const userProfile = await getEmailByReference(user.id, domain);
   submission.nominee = await getEmailByReference(state, domain);
   sendMail(submission, userProfile);
-  res.status(200).json({ text: 'Nomination sent, thanks!' });
+  res.send('');
 };
